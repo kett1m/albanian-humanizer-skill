@@ -1,0 +1,22 @@
+{
+  "name": "albanian-humanizer-installer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Choose your agent and install Shqip & English Humanizer",
+  "type": "module",
+  "bin": {
+    "albanian-humanizer-install": "scripts/install.mjs"
+  },
+  "files": ["scripts/install.mjs", "skills/albanian-humanizer", "LICENSE"],
+  "scripts": {
+    "test": "node --test tests/installer.test.mjs"
+  },
+  "engines": { "node": ">=22.20.0" },
+  "dependencies": { "skills": "1.9.0" },
+  "author": "kett1m <benho0@proton.me>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kett1m/albanian-humanizer-skill.git"
+  }
+}

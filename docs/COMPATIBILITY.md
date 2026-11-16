@@ -90,6 +90,11 @@ may require editing a long document in sections with an explicit continuity log.
 
 ## Verification scope
 
+The interactive npm installer was exercised in a terminal on openSUSE Tumbleweed:
+it asked for the agent, showed the destination, and installed the selected Cursor
+target in an isolated project after confirmation. Its tests cover explicit
+selection, cancellation, project scope, failures, and custom copies.
+
 An installation smoke test on openSUSE Tumbleweed used Skills CLI 1.9.0 to
 install from the private GitHub repository to all 79 supported project targets.
 Those targets share some paths: 53 distinct skill folders were checked. The

@@ -2,16 +2,23 @@
 
 The skill is `albanian-humanizer`; its GitHub repository is
 [`kett1m/albanian-humanizer-skill`](https://github.com/kett1m/albanian-humanizer-skill).
-The skill itself is plain text. Choose native installation for agents that
-support skills, or the [standalone prompt](#any-other-agent-or-chat-tool) for a
-host that accepts instructions but has no skill loader.
+Paste one command into your terminal, choose the app you use, then type **y**.
+The installer asks **“Which AI agent or app do you use?”** every time. It shows
+popular apps first; type **more** for the full list, or enter an agent name.
+For multiple agents, separate numbers or names with commas. Type **q** to cancel.
+It shows the destination before installing and uses copies, so no symlink setup
+is needed on Windows.
+
+Choice **0** asks for a custom skills folder and copies the complete skill there.
+For a chat app with no skills folder, use the
+[standalone prompt](#any-other-agent-or-chat-tool).
 
 ## One line: Linux and macOS
 
 With Git and Node.js **22.20 or newer** installed, paste this into Bash or Zsh:
 
 ```bash
-npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 This is the same skill-install command on openSUSE Tumbleweed, Leap, Slowroll,
@@ -26,38 +33,41 @@ and a working Node runtime are required.
 In **Windows PowerShell 5.1**, **PowerShell 7**, or **Command Prompt**:
 
 ```powershell
-npx.cmd --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+npx.cmd --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
-`npx.cmd` avoids PowerShell's `.ps1` execution-policy issue. `--copy` avoids
-requiring symlink privileges. In Git Bash, use the Linux/macOS line. In WSL, use
+`npx.cmd` avoids PowerShell's `.ps1` execution-policy issue. The installer copies
+files without requiring symlink privileges. In Git Bash, use the Linux/macOS line. In WSL, use
 the Linux line and install Linux prerequisites inside WSL; this targets the WSL
 agent environment, separately from native Windows installations.
 
-## What the flags do
+## How the one-liner works
 
-`skills@1.9.0` pins the tested installer version. Its
-[package manifest](https://github.com/vercel-labs/skills/blob/v1.9.0/package.json)
-requires Node.js 22.20+. A current Node LTS release is a suitable choice.
-`--skill albanian-humanizer` selects this skill. `--agent "*"` selects all hosts
-the CLI knows; keep the quotes so your shell does not expand the wildcard.
-`--global` means your user account, not a root-owned system installation.
-`--copy` installs independent complete copies. The two `--yes` flags approve
-npx's package download and the Skills CLI's installation prompts respectively.
+`npx --yes` downloads and starts this repository's installer. Its **agent picker
+and installation confirmation remain interactive**. The npm package uses the
+[Skills API](https://github.com/vercel-labs/skills/blob/v1.9.0/docs/api.md), pinned
+to 1.9.0, for its current agent list, correct directories, and update tracking.
+It passes your choices explicitly; it does not auto-select an agent based on the
+terminal environment. It installs the skill, not the agent application.
 
-This installs into the supported agents' skill directories, including agents
-you may not use. It does not install agent applications. The global wildcard
-skips hosts with no global directory, such as Eve and PromptScript in CLI 1.9.0.
-For those, run this **inside the intended project**:
+The default is your user account, available across projects. If your selected
+agent supports only project skills, the installer asks for the existing project
+folder. For a project installation on any supported agent, run **inside that
+project**:
 
 ```bash
-npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --copy --yes
+npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git --project
 ```
 
-Use `npx.cmd` instead of `npx` for every Windows command below. The shared flags
-follow the [official CLI reference](https://github.com/vercel-labs/skills/blob/v1.9.0/docs/commands.md).
-Do not run the skill-install command with `sudo`: it should install for your own
-account. Only OS package setup below needs elevated privileges.
+Enter the number/name of your app, review the displayed destination, and type
+**y**. Other apps may share the same skill folder and discover that copy too.
+Custom-folder mode creates a new `albanian-humanizer` subfolder and refuses to
+replace an existing folder; update those copies manually.
+
+Use `npx.cmd` instead of `npx` for Windows. Run in a normal interactive terminal;
+a piped command, background job, or CI job cannot answer the picker. There is no
+installation to a default agent when input is missing. Do not run the installer
+with `sudo`; only OS prerequisite setup below needs elevated privileges.
 
 ## GitHub access
 
@@ -79,7 +89,8 @@ gh auth setup-git --hostname github.com
 
 Both commands work in Bash, Zsh, PowerShell, and Command Prompt. `gh auth login`
 is interactive; follow its browser/device prompts. Use an account with repository
-access. Existing SSH credentials also work. Do not paste an access token into an
+access. The HTTPS one-liner needs working HTTPS Git credentials; `gh auth
+setup-git` connects your GitHub CLI login to Git. Do not paste an access token into an
 installation URL, shell history, or this repository.
 
 Check access and discover the skill without installing:
@@ -91,10 +102,10 @@ npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --list
 ## openSUSE Tumbleweed
 
 After GitHub access is configured, this one line installs Git, Node.js 24 and
-npm, then installs the skill for all supported global agent targets:
+npm, then asks which agent you use and installs the skill after you confirm:
 
 ```bash
-sudo zypper install -y git nodejs24 npm24 && npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+sudo zypper install -y git nodejs24 npm24 && npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 The package names were checked in the
@@ -114,7 +125,7 @@ With [Homebrew](https://brew.sh/) installed, this is a combined prerequisite and
 skill-install line; GitHub access must already be configured:
 
 ```bash
-brew install node git && npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+brew install node git && npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 Homebrew's [Node formula](https://formulae.brew.sh/formula/node) includes npm and
@@ -159,10 +170,10 @@ the tested CLI's Node minimum.
 Use your release's configured repositories and normal package-management process.
 These setup lines do not install the skill or authenticate GitHub. Once those
 tools and repository access are ready, this **one line** installs per-user nvm,
-selects current Node LTS, and installs the skill:
+selects current Node LTS, and opens the agent picker:
 
 ```bash
-bash -o pipefail -c 'export NVM_DIR="${NVM_DIR:-$HOME/.nvm}" && mkdir -p "$NVM_DIR" && curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash && . "$NVM_DIR/nvm.sh" && nvm install --lts && npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes'
+bash -o pipefail -c 'export NVM_DIR="${NVM_DIR:-$HOME/.nvm}" && mkdir -p "$NVM_DIR" && curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash && . "$NVM_DIR/nvm.sh" && nvm install --lts && npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git'
 ```
 
 This follows [nvm's installation and LTS usage](https://github.com/nvm-sh/nvm/tree/v0.41.0).
@@ -175,7 +186,7 @@ can be used instead. For musl-based systems, use native packages as below.
 **Alpine Linux** (with `doas` configured; Node/npm repositories available):
 
 ```bash
-doas apk add git nodejs npm && npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+doas apk add git nodejs npm && npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 Alpine provides separate [Node](https://pkgs.alpinelinux.org/packages?name=nodejs)
@@ -187,13 +198,13 @@ three packages, then run npx as your user.
 **Void Linux**, including its musl edition, can use its native Node package:
 
 ```bash
-sudo xbps-install -S -y git nodejs && npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+sudo xbps-install -S -y git nodejs && npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 **NixOS or Linux/macOS with Nix**, using a temporary tool environment:
 
 ```bash
-nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nodejs_24 nixpkgs#git --command npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+nix --extra-experimental-features "nix-command flakes" shell nixpkgs#nodejs_24 nixpkgs#git --command npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
 ```
 
 This requires a configured `nixpkgs` registry with those packages. It temporarily
@@ -203,11 +214,13 @@ development environment and user account as the agent that should discover it.
 
 ## Choose agents and scope
 
-**Choose interactively:**
+The one-liners above always ask. No flags need editing. The menu accepts a
+number, an agent ID such as `codex`, or a displayed name such as `Claude Code`.
+Type **more** for every supported target, **0** for a custom skills directory,
+or **all** to explicitly select every target (project-only agents will require
+a project folder).
 
-```bash
-npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --global --copy
-```
+For automation, these advanced commands skip the custom picker:
 
 **Codex only:**
 
@@ -225,8 +238,8 @@ Other supported identifiers include `cline`, `roo`, `kilo`, `amp`, `goose`,
 `continue`, `pi`, `openhands`, `openclaw`, `aider-desk`, `antigravity`, `augment`,
 `crush`, `droid`, `kiro-cli`, `qwen-code`, `replit`, `trae`, `warp`, and `zed`.
 Consult the [agent table for CLI 1.9.0](https://github.com/vercel-labs/skills/blob/v1.9.0/docs/agents.md)
-for all supported names and paths. The wildcard covers that entire list, subject
-to the requested scope. It does not mean every future agent has native support.
+for all supported names and paths. A custom folder or prompt remains available
+for other hosts; native integration is not claimed for every future agent.
 
 ## Any other agent or chat tool
 
@@ -265,7 +278,8 @@ Reload the agent's skill discovery or start a new session. Ask it to use
 `albanian-humanizer`; Codex also supports `$albanian-humanizer`, and slash-skill
 hosts may expose `/albanian-humanizer`. Give a short text and a target profile.
 
-Update this skill only:
+To update, rerun the same one-liner, choose the agent, and confirm. For native
+installations, you can also update this skill only:
 
 ```bash
 npx --yes skills@1.9.0 update albanian-humanizer --global --yes
@@ -285,7 +299,13 @@ terminal or activate your intended Node version; do not install the skill as roo
 
 ## Validation scope
 
-On 2026-11-16, the remote install command was exercised on openSUSE Tumbleweed in
+On 2026-11-16, the interactive installer passed nine automated tests. The packed
+npm executable was launched through npx in a real TTY on openSUSE Tumbleweed.
+It prompted for an agent even inside the coding-agent environment, displayed
+destinations, and installed Cursor in an isolated project after confirmation.
+The installed files matched the source. Non-interactive execution was rejected.
+
+The earlier direct CLI install command was also exercised on Tumbleweed in
 an isolated project with `--agent "*" --copy --yes`, without `--global`. CLI 1.9.0
 reported all **79 supported targets**; they used **53 distinct skill folders**.
 Instruction bodies and parsed metadata matched, and all supporting resources and

@@ -17,6 +17,11 @@ python3 -m unittest discover -s tests -v
 python3 scripts/package_skill.py --output dist
 ```
 
+For installer changes, use Node.js 22.20+ and run `npm ci --ignore-scripts`
+followed by `npm test`. The interactive installer uses the pinned Skills API.
+Exercise installation in an isolated project with `--project`, preserving real
+user-level agent directories.
+
 For behavioral changes, exercise relevant cases from `evals/cases.json` and
 report what actually ran. Do not overwrite another project's agent instructions
 or install globally as part of packaging. Generated files belong in `dist/`.
