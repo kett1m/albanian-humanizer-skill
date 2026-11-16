@@ -40,7 +40,12 @@ installer replaced it. The earlier CLI installation checks above are historical.
 PowerShell 7.7 was downloaded from Microsoft's official release and run portably
 on Linux for syntax and interactive installation checks. Windows PowerShell 5.1,
 Windows-specific filesystem behavior, and macOS execution were not tested.
-The public raw endpoint remains unavailable while the repository is private.
+The repository was made public with the owner's approval. Both anonymous raw
+URLs matched the committed scripts. The public curl pipeline and PowerShell
+`Invoke-RestMethod` route each downloaded the repository archive, prompted in
+a terminal, and installed a complete copy in an isolated project. All 15 files
+matched the source. These network checks ran on Linux; Windows release coverage
+remains based on documented built-in commands, not execution on every OS image.
 
 The full [forward-test report](FORWARD_TEST_RESULTS.md) contains actual responses,
 review findings, the saved-file fixture, and comparisons. The reviewing agent

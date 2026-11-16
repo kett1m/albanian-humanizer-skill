@@ -16,16 +16,15 @@ Paste into your terminal, choose your AI agent, then type **y**.
 curl -fsSL https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.sh | bash
 ```
 
-**Windows PowerShell**:
+**Windows 10 / Windows 11** — open **Windows PowerShell**:
 
 ```powershell
-irm https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex
+irm -UseBasicParsing https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex
 ```
 
-**Availability:** this repository is currently private. These anonymous raw URLs
-will work after the owner makes it public. Until then, run `bash install.sh`
-from an authorized local checkout; on Windows, run `./install.ps1` where local
-script execution is permitted.
+Uses Windows' built-in PowerShell downloader; no extra download utility or
+PowerShell 7 installation is needed. The repository is public, so no GitHub
+sign-in is required. The guide also includes a `curl.exe` alternative.
 
 The script asks **“Which AI agent or app do you use?”** Choose Codex, Claude Code,
 Cursor, Copilot, Gemini CLI, OpenCode, Windsurf, Cline, or type **more** for the

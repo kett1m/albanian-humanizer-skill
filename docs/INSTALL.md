@@ -19,28 +19,55 @@ Parrot, MX, Fedora, RHEL, Rocky, AlmaLinux, CentOS Stream, Oracle Linux, Arch,
 Manjaro, EndeavourOS, Garuda, CachyOS, Alpine, Gentoo, Void, and macOS when those
 basic tools are available. WSL uses this Linux route.
 
-## Windows PowerShell
+## Windows 10 and Windows 11
 
-In Windows PowerShell 5.1 or PowerShell 7:
+Open **Windows PowerShell** from Start and paste:
 
 ```powershell
-irm https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex
+irm -UseBasicParsing https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex
 ```
 
-`irm` downloads the script from the raw URL; `iex` runs it. The script uses
-PowerShell's built-in download, ZIP extraction, and file-copy commands.
-No execution-policy change or administrator session is needed for this command.
-From Command Prompt, open PowerShell first. Native Windows and WSL have separate
-agent environments; install in the environment where your agent runs.
+This uses the built-in `Invoke-RestMethod` downloader (`irm`) and runs the
+complete script with `Invoke-Expression` (`iex`). It targets the requested range
+from **Windows 10 21H2 through Windows 11 26H2**, using Windows PowerShell 5.1
+commands. PowerShell 7 works too, but is not required. Windows Terminal, WinGet,
+Git, Node, npm, GNU wget, and third-party download tools are not required.
 
-## Repository access
+Microsoft documents [Windows PowerShell 5.1 as preinstalled](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/01-getting-started)
+and [`Invoke-RestMethod` as available since PowerShell 3.0](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1).
+`-UseBasicParsing` avoids relying on legacy browser parsing. Compatibility here
+is based on those built-in commands; every Windows release/image has not been
+individually tested. Organization-managed restrictions or removed Windows
+components can affect execution.
 
-**The repository is currently private.** Anonymous raw and archive URLs cannot
-serve it until the owner makes it public. The raw commands above are ready for
-public access; a private repository returns an error instead. The installer
-does not change repository visibility or embed credentials.
+**Prefer curl?** In PowerShell, use this one line:
 
-From an authorized local checkout, install without downloading anything:
+```powershell
+$humanizerScript = curl.exe -fsSL https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1; if ($LASTEXITCODE -eq 0) { iex ($humanizerScript -join "`n") }
+```
+
+Use **`curl.exe`**, including the extension. Windows PowerShell 5.1 aliases plain
+`curl` and `wget` to `Invoke-WebRequest`, which accepts different options. Microsoft
+[documents curl as included with Windows](https://learn.microsoft.com/en-us/windows/curl/).
+The command above joins the downloaded lines before executing and only runs them
+if curl succeeds. GNU wget is not needed.
+
+**From Command Prompt**, use the built-in PowerShell executable:
+
+```cmd
+powershell.exe -NoProfile -Command "irm -UseBasicParsing https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex"
+```
+
+The script uses PowerShell's built-in ZIP extraction and file-copy commands.
+It does not change execution policy or require an administrator session. Native
+Windows and WSL have separate agent environments; use the Linux route inside WSL.
+
+## Repository access and offline setup
+
+The repository is **public**. Both raw scripts and the skill archives can be
+downloaded without a GitHub account, token, or GitHub CLI.
+
+From a local checkout, install without downloading anything:
 
 ```bash
 bash install.sh
@@ -105,7 +132,7 @@ curl -fsSL https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/mai
 Windows PowerShell:
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1))) -Project
+& ([scriptblock]::Create((irm -UseBasicParsing https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1))) -Project
 ```
 
 The scripts honor the applicable `XDG_CONFIG_HOME`, `CLAUDE_CONFIG_DIR`,
@@ -164,4 +191,5 @@ symlink refusal. All installed skill resources and notices were byte-compared
 with the source. No real user-level agent installation or OS dependency install
 was performed. PowerShell 7.7 also installed all 53 distinct project folders on Linux, with
 all 15 skill files preserved in each. Native Windows/macOS execution has not been
-tested. Details are in [the validation record](../evals/VALIDATION.md).
+tested. The public curl and PowerShell raw-download routes also completed anonymously
+and preserved every file. Details are in [the validation record](../evals/VALIDATION.md).
