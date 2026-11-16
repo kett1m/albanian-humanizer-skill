@@ -7,6 +7,9 @@ MCP servers. `agents/openai.yaml` is optional Codex UI metadata.
 
 ## Native skills
 
+For commands that work from any directory, including OS prerequisites and
+openSUSE Tumbleweed, start with the [installation guide](INSTALL.md).
+
 Use the complete `skills/albanian-humanizer/` folder. Copying only `SKILL.md`
 would omit the language profiles and licenses. Installation commands below run
 from the repository root and use the maintained
@@ -86,6 +89,14 @@ when needed. Keep meaning-preservation rules and credits. A small-context model
 may require editing a long document in sections with an explicit continuity log.
 
 ## Verification scope
+
+An installation smoke test on openSUSE Tumbleweed used Skills CLI 1.9.0 to
+install from the private GitHub repository to all 79 supported project targets.
+Those targets share some paths: 53 distinct skill folders were checked. The
+installed instruction bodies, parsed metadata, references, and license notices
+matched the source. The test used an isolated project, not global installation,
+and did not run the 79 agent products themselves. Windows and macOS commands
+were reviewed against their tooling documentation, not executed on those OSes.
 
 Local tests verify packaging, complete resources, portable links, checksums,
 deterministic output, and overwrite protection. Model forward-tests exercise

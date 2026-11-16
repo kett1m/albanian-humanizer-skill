@@ -52,28 +52,48 @@ plain; A1 remains grammatical and respectful.
 
 ## Install
 
-From this repository, with the [Skills CLI](https://github.com/vercel-labs/skills):
+Copy and paste from **any directory**. Requires Git and **Node.js 22.20+** with
+npm/npx. These commands pin the tested [Skills CLI](https://github.com/vercel-labs/skills)
+version, install for your user account, and copy the complete skill to every
+supported agent with a user-level skill directory.
+
+**Linux and macOS** — Bash or Zsh, including **openSUSE Tumbleweed**:
 
 ```bash
-# Inspect the available skill first.
-npx skills add . --list
-
-# Choose one or more agents interactively.
-npx skills add . --skill albanian-humanizer
-
-# Or install to all agents supported by the CLI, for your user account.
-npx skills add . --skill albanian-humanizer --agent '*' --global
+npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
 ```
 
-The last command intentionally targets every supported agent, including agents
-you may not use. For a narrower install, select agent identifiers:
+**Windows** — PowerShell or Command Prompt:
+
+```powershell
+npx.cmd --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent "*" --global --copy --yes
+```
+
+The repository is currently **private**: your GitHub account must have access,
+with Git credentials or an authenticated `gh` session. No token belongs in the
+command. See the [one-time authentication setup](docs/INSTALL.md#github-access).
+The commands include agents you may not use; omit `--agent "*"` and the final
+`--yes` to choose agents interactively. `--copy` avoids requiring symlink
+privileges on Windows.
+
+For **every supported agent in a project**, including hosts with no global skill
+directory, run the command in that project and omit `--global`.
+
+[Full copy-and-paste installation guide](docs/INSTALL.md): Windows, macOS,
+openSUSE Tumbleweed/Leap/Slowroll, Ubuntu, Debian, Mint, Pop!_OS, Fedora, RHEL,
+Rocky, AlmaLinux, Arch, Manjaro, EndeavourOS, Alpine, Gentoo, Void, NixOS, WSL,
+and more. Includes prerequisites, a current-Node fallback, agent selection,
+verification, updates, removal, and a standalone prompt for other agents.
+
+**Only selected agents** — replace the names with your choices:
 
 ```bash
-npx skills add . --skill albanian-humanizer --agent codex claude-code cursor
+npx --yes skills@1.9.0 add kett1m/albanian-humanizer-skill --skill albanian-humanizer --agent codex claude-code cursor --global --copy --yes
 ```
 
-No API key or runtime dependency is needed by the skill itself. The CLI uses Node
-and may access the network. For offline installation, copy the entire
+No API key or runtime dependency is needed by the skill itself. Node and Git are
+installation tools; Python is needed only to build the optional exports.
+For offline installation, copy the entire
 [`skills/albanian-humanizer`](skills/albanian-humanizer/SKILL.md) directory into
 your agent's skill directory, preserving its name and supporting files.
 

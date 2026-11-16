@@ -3,7 +3,7 @@
 Release: 1.0.0. Date: 2026-11-16.
 
 This record distinguishes package checks from model-based editorial review.
-No live installation across every supported agent, native-speaker certification,
+No execution of every supported agent product, native-speaker certification,
 or official CEFR assessment is claimed.
 
 | Check actually run | Result |
@@ -12,13 +12,22 @@ or official CEFR assessment is claimed.
 | Python packaging suite | 12 tests passed |
 | Skill-creator `quick_validate.py` | Passed |
 | Skills CLI 1.9.0, `skills add <local-repo> --list` | Discovered exactly one skill: `albanian-humanizer` |
+| Remote installation documentation follow-up | Installed from GitHub to all 79 CLI project targets on openSUSE Tumbleweed; verified 53 distinct folders |
 | Independent model forward-test | All 24 requests executed and reviewed; no blocking fidelity or task-contract failures |
 | Isolated saved-file forward-test | Passed: only authorized prose changed; protected spans preserved |
 
 Packaging checks cover complete ZIP resources, flattened-prompt anchors,
 checksums, deterministic rebuilds, and refusal to overwrite existing artifacts
-without an explicit rebuild flag. The CLI check was list-only; it did not install
-the skill globally or test each agent's runtime behavior.
+without an explicit rebuild flag. The initial CLI discovery check was list-only.
+The subsequent remote-install smoke test used an isolated project and checked
+parsed frontmatter, instruction bodies, references, and licenses against the
+source. One target normalized YAML layout while preserving values. Neither check
+installed globally or tested each agent application's runtime behavior.
+
+The [installation guide](../docs/INSTALL.md) contains OS-specific one-liners and
+prerequisite routes. All 22 Bash command blocks in the README and guide passed
+`bash -n`. Windows/macOS commands were documentation-reviewed, not executed on
+those systems. No package-manager prerequisite command was run on the host.
 
 The full [forward-test report](FORWARD_TEST_RESULTS.md) contains actual responses,
 review findings, the saved-file fixture, and comparisons. The reviewing agent
