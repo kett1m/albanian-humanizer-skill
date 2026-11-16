@@ -10,8 +10,9 @@ or official CEFR assessment is claimed.
 | --- | --- |
 | Repository validator | Passed: resources, UTF-8, local links, notices, evaluation schema |
 | Python packaging suite | 12 tests passed |
-| Interactive installer tests | 9 tests passed: choices, confirmation, cancellation, scope, failure reporting, and complete custom copies |
-| Packaged one-line installer | Started through npx in a TTY; prompted inside the agent environment, then installed Cursor in an isolated project after confirmation |
+| Bash installer suite | 10 terminal-based tests passed; all cataloged project paths checked |
+| Shell syntax and lint | `bash -n`, ShellCheck, and all 9 Bash documentation blocks passed |
+| PowerShell 7.7 on Linux | Parser and catalog checks passed; interactive installation to all 53 distinct project folders preserved all 15 files |
 | Skill-creator `quick_validate.py` | Passed |
 | Skills CLI 1.9.0, `skills add <local-repo> --list` | Discovered exactly one skill: `albanian-humanizer` |
 | Remote installation documentation follow-up | Installed from GitHub to all 79 CLI project targets on openSUSE Tumbleweed; verified 53 distinct folders |
@@ -26,15 +27,20 @@ parsed frontmatter, instruction bodies, references, and licenses against the
 source. One target normalized YAML layout while preserving values. Neither check
 installed globally or tested each agent application's runtime behavior.
 
-The [installation guide](../docs/INSTALL.md) contains OS-specific one-liners and
-prerequisite routes. All 20 Bash command blocks in the README and guide passed
-`bash -n`. Windows/macOS commands were documentation-reviewed, not executed on
-those systems. No package-manager prerequisite command was run on the host.
+The current [installation guide](../docs/INSTALL.md) uses raw shell and
+PowerShell scripts. The Bash tests exercise a script arriving through a pipe,
+explicit choices, invalid input, cancellation/EOF, custom paths with spaces and
+shell metacharacters, shared-path deduplication, all profiles, update backups,
+symlink refusal, failed downloads, and preview mode. Installed resources and
+licenses are byte-identical to the canonical skill. Native global installations
+and OS package-manager prerequisite commands were not run.
 
-The interactive installer was packed with npm and run from the resulting tarball
-on openSUSE Tumbleweed. Its native installation fetched the private GitHub source;
-the selected target's complete files matched the canonical skill. The installer
-refused non-interactive execution. Native global installation was not performed.
+The previous npm installer and its nine tests were removed when the shell
+installer replaced it. The earlier CLI installation checks above are historical.
+PowerShell 7.7 was downloaded from Microsoft's official release and run portably
+on Linux for syntax and interactive installation checks. Windows PowerShell 5.1,
+Windows-specific filesystem behavior, and macOS execution were not tested.
+The public raw endpoint remains unavailable while the repository is private.
 
 The full [forward-test report](FORWARD_TEST_RESULTS.md) contains actual responses,
 review findings, the saved-file fixture, and comparisons. The reviewing agent

@@ -11,28 +11,22 @@ For commands that work from any directory, including OS prerequisites and
 openSUSE Tumbleweed, start with the [installation guide](INSTALL.md).
 
 Use the complete `skills/albanian-humanizer/` folder. Copying only `SKILL.md`
-would omit the language profiles and licenses. Installation commands below run
-from the repository root and use the maintained
-[Skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
+would omit the language profiles and licenses. The raw shell and PowerShell
+installers read a bundled [agent directory catalog](../installer/agents.txt),
+prompt for the agent, and copy the entire skill. There is no package runtime.
 
-| Host | Select with `--agent` | Integration route |
-| --- | --- | --- |
-| Codex | `codex` | Native skill; optional OpenAI UI metadata included |
-| Claude Code | `claude-code` | Native skill |
-| Cursor | `cursor` | Native skill |
-| GitHub Copilot | `github-copilot` | Native skill in supported clients |
-| Gemini CLI | `gemini-cli` | Native skill |
-| OpenCode | `opencode` | Native skill |
-| Windsurf | `windsurf` | Native skill |
-| Cline / Roo Code / Kilo Code | `cline`, `roo`, `kilo` | Native skill in supported versions |
-| Amp / Goose / Continue | `amp`, `goose`, `continue` | Native skill |
-| Pi / OpenHands / OpenClaw | `pi`, `openhands`, `openclaw` | Native skill |
-| Other supported hosts | See the CLI's current agent list | `--agent '*'` or interactive selection |
-
-```bash
-npx skills add . --skill albanian-humanizer --agent codex
-npx skills add . --skill albanian-humanizer --agent claude-code --global
-```
+| Host | Choose in the installer |
+| --- | --- |
+| Codex | `codex` |
+| Claude Code | `claude-code` |
+| Cursor | `cursor` |
+| GitHub Copilot | `github-copilot` |
+| Gemini CLI | `gemini-cli` |
+| OpenCode | `opencode` |
+| Windsurf | `windsurf` |
+| Cline / Roo Code / Kilo Code | `cline`, `roo`, `kilo` |
+| Other cataloged hosts | Type `more` |
+| Another skills directory | Choose `0` |
 
 For manual Codex setup, copy the skill directory into `.agents/skills/` in the
 project, or `~/.agents/skills/` for user scope. OpenAI documents these locations
@@ -90,20 +84,17 @@ may require editing a long document in sections with an explicit continuity log.
 
 ## Verification scope
 
-The interactive npm installer was exercised in a terminal on openSUSE Tumbleweed:
-it asked for the agent, showed the destination, and installed the selected Cursor
-target in an isolated project after confirmation. Its tests cover explicit
-selection, cancellation, project scope, failures, and custom copies.
+The current Bash installer was exercised through a real terminal on openSUSE
+Tumbleweed, including a script arriving on a pipe and installation to every
+cataloged project path. Complete resources and notices matched the source.
+The tests also cover cancellation, custom folders, update backups, symlink
+refusal, and failed downloads. They use isolated projects and do not run the
+agent products themselves.
 
-An installation smoke test on openSUSE Tumbleweed used Skills CLI 1.9.0 to
-install from the private GitHub repository to all 79 supported project targets.
-Those targets share some paths: 53 distinct skill folders were checked. The
-installed instruction bodies, parsed metadata, references, and license notices
-matched the source. The test used an isolated project, not global installation,
-and did not run the 79 agent products themselves. Windows and macOS commands
-were reviewed against their tooling documentation, not executed on those OSes.
+Earlier versions tested the Vercel Skills CLI and an npm installer. Those
+installers have been replaced by the raw scripts. The directory catalog remains
+credited to Vercel Skills 1.9.0; there is no runtime CLI dependency.
 
-Local tests verify packaging, complete resources, portable links, checksums,
-deterministic output, and overwrite protection. Model forward-tests exercise
-selected editorial behaviors. Neither establishes exhaustive linguistic quality,
-certified CEFR alignment, or live compatibility with every host version.
+See [the validation record](../evals/VALIDATION.md) for actual checks and limits.
+Windows/macOS runtime behavior and exhaustive compatibility with every host
+version have not been established. Language examples are not CEFR-certified.

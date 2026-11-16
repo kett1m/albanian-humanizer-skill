@@ -8,41 +8,37 @@ more advanced language. Created by **kett1m**. The repository is named
 
 ## Install in one line
 
-Paste the command into your **terminal**. The installer asks **“Which AI agent or
-app do you use?”** Choose a number or name, then type **y** to install. No agent
-flags or folder setup needed for supported agents.
+Paste into your terminal, choose your AI agent, then type **y**.
 
 **Linux / macOS**, including **openSUSE Tumbleweed**:
 
 ```bash
-npx --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
+curl -fsSL https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.sh | bash
 ```
 
-**Windows PowerShell / Command Prompt**:
+**Windows PowerShell**:
 
 ```powershell
-npx.cmd --yes git+https://github.com/kett1m/albanian-humanizer-skill.git
+irm https://raw.githubusercontent.com/kett1m/albanian-humanizer-skill/main/install.ps1 | iex
 ```
 
-Choose Codex, Claude Code, Cursor, Copilot, Gemini CLI, OpenCode, Windsurf, Cline,
-or type **more** for the full list. You can select several agents with commas.
-Choice **0** copies the complete skill into another agent's skills folder.
-The installer always asks, even when run inside an agent's terminal. It shows
-the destination and asks before installing or updating an existing copy.
+**Availability:** this repository is currently private. These anonymous raw URLs
+will work after the owner makes it public. Until then, run `bash install.sh`
+from an authorized local checkout; on Windows, run `./install.ps1` where local
+script execution is permitted.
 
-Requires **Git** and **Node.js 22.20+**. This repository is **private**, so your
-GitHub account needs access and working Git credentials. With GitHub CLI,
-complete this [one-time sign-in](docs/INSTALL.md#github-access) first.
+The script asks **“Which AI agent or app do you use?”** Choose Codex, Claude Code,
+Cursor, Copilot, Gemini CLI, OpenCode, Windsurf, Cline, or type **more** for the
+full list. Separate multiple choices with commas. Choice **0** accepts a custom
+skills folder. No Node, npm, npx, Git, or Python is needed for the online installer.
 
-[Easy setup and distro commands](docs/INSTALL.md): openSUSE Tumbleweed/Leap/Slowroll,
-Ubuntu, Debian, Fedora, Arch, Alpine, Gentoo, Void, NixOS, macOS, Windows, and more.
-Includes prerequisite setup, project installs, updates, and a standalone prompt
-for chat tools without native skills.
+The installer shows the destination before writing. It copies the complete skill
+and preserves an existing copy in a backup folder before updating it. Restart
+your agent afterward and ask it to use **albanian-humanizer**.
 
-After installation, restart your agent and ask it to use **albanian-humanizer**.
-In Codex, use `$albanian-humanizer`; slash-skill hosts may expose
-`/albanian-humanizer`. No API key or runtime dependency is needed by the skill
-itself. See [compatibility and offline setup](docs/COMPATIBILITY.md).
+[Installation guide](docs/INSTALL.md): distro prerequisites, project installs,
+offline setup, updates, and other agents. The shell installer needs Bash 3.2+,
+curl, tar, and gzip; Windows uses PowerShell 5.1 or 7.
 
 ## Choose a voice
 
@@ -139,8 +135,9 @@ python3 -m unittest discover -s tests -v
 python3 scripts/package_skill.py --output dist
 ```
 
-For installer development, use Node.js 22.20+, run `npm ci --ignore-scripts`,
-then `npm test`. Test real installations in an isolated project with `--project`.
+For shell installer development, run `bash -n install.sh` and
+`shellcheck install.sh`. The Python suite also exercises the installer in a real
+terminal. Test installations in an isolated project with `--project`.
 
 [Behavioral cases](evals/cases.json) test decisions that file validation cannot
 prove. The [evaluation guide](evals/README.md) explains the rubric and limits.
